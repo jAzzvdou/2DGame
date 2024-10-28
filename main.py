@@ -1,4 +1,5 @@
 from verify_map import get_map, invalid_map
+'''
 import pygame
 
 try:
@@ -36,10 +37,11 @@ def start_map(maps):
 
 
 # def map_loop(maps):
+'''
 
 
 def main():
-   pygame.init()
+    # pygame.init()
 
     maps = get_map()
     if (maps is None):
@@ -47,5 +49,11 @@ def main():
     if (invalid_map(maps)):
         return
 
-    start_map(maps)
+    print("O mapa é válido!")
+
+    # start_map(maps)
     # map_loop(maps)
+
+
+if __name__ == '__main__':
+    main()
