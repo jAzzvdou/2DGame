@@ -1,17 +1,19 @@
 from verify_map import get_map, invalid_map
-'''
+from macros import ERR_IMAGE
+from utils import err
 import pygame
 
 try:
-    WALL = pygame.image.load('wall.png')
-    WAY = pygame.image.load('way.png')
-    COIN = pygame.image.load('coin.png')
-    EXIT = pygame.image.load('exit.png')
-    PLAYER = pygame.image.load('player.png')
+    WALL = pygame.image.load('Textures/wall.png')
+    WAY = pygame.image.load('Textures/way.png')
+    COIN = pygame.image.load('Textures/coin.png')
+    EXIT = pygame.image.load('Textures/exit.png')
+    PLAYER = pygame.image.load('Textures/player.png')
 except pygame.error as error:
     err(ERR_IMAGE.format(image=error))
 
-IMAGE = 16
+IMAGE = 64
+
 
 def start_map(maps):
     width = len(maps[0]) * IMAGE
@@ -33,26 +35,23 @@ def start_map(maps):
             elif (i == 'P'):
                 screen.blit(PLAYER, (x * IMAGE, y * IMAGE))
 
-    pygames.display.flip()
-
-
-# def map_loop(maps):
-'''
+    pygame.display.flip()
 
 
 def main():
-    # pygame.init()
-
     maps = get_map()
     if (maps is None):
         return
     if (invalid_map(maps)):
         return
 
-    print("O mapa é válido!")
-
-    # start_map(maps)
-    # map_loop(maps)
+    pygame.init()
+    start_map(maps)
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
 
 
 if __name__ == '__main__':

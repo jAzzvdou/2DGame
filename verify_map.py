@@ -8,6 +8,7 @@ def get_map():
         err(ERR_FILENAME.format(filename=filename))
         return None
 
+    filename = 'Maps/' + filename
     try:
         with open(filename, 'r') as file:
             maps = [list(line.strip()) for line in file]  # OLHAR.
