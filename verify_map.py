@@ -37,13 +37,11 @@ def invincible_map(maps):
         for x, i in enumerate(line):
             if (i == 'P'):
                 player_pos = (y, x)
-            elif (i == 'E'):
-                exit_pos = (y, x)
             elif (i == 'C'):
                 coin_pos.add((y, x))
 
     def floodfill(y, x, visited):
-        if ((y, x) in visited or maps[y][x] == '1'):
+        if ((y, x) in visited or maps[y][x] in ('1', 'E')):
             return
 
         visited.add((y, x))
@@ -55,16 +53,21 @@ def invincible_map(maps):
 
     visited = set()
     floodfill(player_pos[0], player_pos[1], visited)
-    if (not coin_pos.issubset(visited) or (exit_pos not in visited)):
+    if (not coin_pos.issubset(visited)):
         return True
 
     return False
 
 
 def invalid_map(maps):
+    x = 0
+    y = 0
     for line in maps:
+        y += 1
+        x = 0
         for i in line:
-            if (i not in ['0', '1', 'C', 'E', 'P']):
+            x += 1
+            if (i not in ['0', '1', 'C', 'E', 'P'] or x > 15 or y > 8):
                 err(ERR_MAP)
                 return True
 
