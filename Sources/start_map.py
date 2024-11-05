@@ -4,12 +4,12 @@ import pygame
 import random
 
 try:
-    WALL = pygame.image.load('Textures/wall.png')
-    WAY = pygame.image.load('Textures/way.png')
-    COIN = pygame.image.load('Textures/coin.png')
-    EXIT = pygame.image.load('Textures/exit.png')
-    PLAYER = pygame.image.load('Textures/player.png')
-    ENEMY = pygame.image.load('Textures/enemy.png')
+    WALL = pygame.image.load('../Textures/wall.png')
+    WAY = pygame.image.load('../Textures/way.png')
+    COIN = pygame.image.load('../Textures/coin.png')
+    EXIT = pygame.image.load('../Textures/exit.png')
+    PLAYER = pygame.image.load('../Textures/player.png')
+    ENEMY = pygame.image.load('../Textures/enemy.png')
 except pygame.error as error:
     err(ERR_IMAGE.format(image=error))
 
