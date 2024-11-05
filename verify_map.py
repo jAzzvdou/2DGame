@@ -60,14 +60,9 @@ def invincible_map(maps):
 
 
 def invalid_map(maps):
-    x = 0
-    y = 0
     for line in maps:
-        y += 1
-        x = 0
         for i in line:
-            x += 1
-            if (i not in ['0', '1', 'C', 'E', 'P'] or x > 15 or y > 8):
+            if (i not in ['0', '1', 'C', 'E', 'P']):
                 err(ERR_MAP)
                 return True
 

@@ -11,7 +11,7 @@ try:
 except pygame.error as error:
     err(ERR_IMAGE.format(image=error))
 
-IMAGE = 120
+IMAGE = 64
 
 
 def start_map(maps):
