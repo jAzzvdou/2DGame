@@ -140,8 +140,7 @@ def map_loop(screen, maps):
             elif (event.type == pygame.KEYDOWN):
                 newx, newy = player
                 if (event.key == pygame.K_ESCAPE):
-                    running = False
-                    break
+                    return "exit"
                 elif (event.key == pygame.K_UP):
                     newy -= 1
                 elif (event.key == pygame.K_DOWN):
@@ -161,22 +160,17 @@ def map_loop(screen, maps):
                 if (maps[newy][newx] == 'E'):
                     if (coins < 1):
                         running = False
-                        print("Congratulations! You won!")
-                        break
+                        return "win"
                     else:
                         continue
 
                 if (maps[newy][newx] == 'G'):
-                    running = False
-                    print("Game Over!")
-                    break
+                    return "lose"
 
                 if (maps[newy][newx] != '1'):
                     maps = move_enemies(maps, screen)
                     if (maps is None):
-                        running = False
-                        print("Game Over!")
-                        break
+                        return "lose"
                     if (maps[newy][newx] == 'C'):
                         maps[newy][newx] = '0'
                         coins -= 1
@@ -188,3 +182,4 @@ def map_loop(screen, maps):
         pygame.time.delay(100)
 
     pygame.quit()
+    return "exit"
