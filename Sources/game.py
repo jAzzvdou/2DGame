@@ -79,43 +79,60 @@ def gameplay(screen, maps):
     player = find_player(maps)
     coins = count_char(maps, 'C')
 
+    print("O jogo iniciou!")
     running = True
     while running:
+        print("Dentro do While True...")
         for event in pygame.event.get():
+            print("Dentro do For Event...")
             if (event.type == pygame.QUIT):
                 running = False
+            print("1")
             elif (event.type == pygame.KEYDOWN):
                 newx, newy = player
+                print("2")
                 if (event.key == pygame.K_ESCAPE):
                     return "exit"
+                print("3")
                 elif (event.key == pygame.K_UP):
                     newy -= 1
+                print("4")
                 elif (event.key == pygame.K_DOWN):
                     newy += 1
+                print("5")
                 elif (event.key == pygame.K_LEFT):
                     newx -= 1
+                print("6")
                 elif (event.key == pygame.K_RIGHT):
                     newx += 1
+                print("7")
                 elif (event.key == pygame.K_SPACE and enemy_around(maps, *player)):
+                    print("8")
                     enemies_around = get_around(maps, *player)
                     if (enemies_around):
+                        print("9")
                         for enemy in enemies_around:
+                            print("10")
                             update_map(screen, 'D', *enemy)
                             pygame.time.delay(100)
                             update_map(screen, '0', *enemy)
                             maps[enemy[1]][enemy[0]] = '0'
                         continue
 
+                print("11")
                 if (maps[newy][newx] == 'E'):
                     if (coins < 1):
                         running = False
                         return "win"
                     else:
+                        print("12")
                         continue
 
+                print("13")
                 if (maps[newy][newx] == 'G'):
                     return "lose"
 
+                print("14")
                 if (maps[newy][newx] != '1'):
                     if (maps[newy][newx] == 'C'):
                         maps[newy][newx] = '0'
@@ -124,6 +141,7 @@ def gameplay(screen, maps):
                         update_map(screen, '0', *player)
                     player = (newx, newy)
                     update_map(screen, 'P', newx, newy)
+                print("Atualizando tela...")
 
         pygame.time.delay(100)
 
