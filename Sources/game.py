@@ -1,45 +1,22 @@
-from macros import ERR_IMAGE
-from utils import err, count_char
 import pygame
-import random
-
-try:
-    WALL = pygame.image.load('../Textures/wall.png')
-    WAY = pygame.image.load('../Textures/way.png')
-    COIN = pygame.image.load('../Textures/coin.png')
-    EXIT = pygame.image.load('../Textures/exit.png')
-    PLAYER = pygame.image.load('../Textures/player.png')
-    ENEMY = pygame.image.load('../Textures/enemy.png')
-except pygame.error as error:
-    err(ERR_IMAGE.format(image=error))
-
-IMAGE = 64
+from utils import count_char
+from map_utils import get_map, create_map, update_map
+from verify_map import invalid_map
+from macros import GREEN, RED, GREY, RESET
 
 
-def start_map(maps):
-    pygame.init()
-    width = len(maps[0]) * IMAGE
-    height = len(maps) * IMAGE
-
-    screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption("| Ruined Castle |")
-
-    for y, line in enumerate(maps):
-        for x, i in enumerate(line):
-            if (i == '1'):
-                screen.blit(WALL, (x * IMAGE, y * IMAGE))
-            elif (i == '0'):
-                screen.blit(WAY, (x * IMAGE, y * IMAGE))
-            elif (i == 'C'):
-                screen.blit(COIN, (x * IMAGE, y * IMAGE))
-            elif (i == 'E'):
-                screen.blit(EXIT, (x * IMAGE, y * IMAGE))
-            elif (i == 'P'):
-                screen.blit(PLAYER, (x * IMAGE, y * IMAGE))
-            elif (i == 'G'):
-                screen.blit(ENEMY, (x * IMAGE, y * IMAGE))
-    pygame.display.flip()
-    return screen
+def init_game():
+    maps = get_map()
+    if (maps is None or invalid_map(maps)):
+        return
+    screen = create_map(maps)
+    result = gameplay(screen, maps)
+    if (result == "win"):
+        print(GREEN + "\nParabéns! Você venceu!" + RESET)
+    elif (result == "lose"):
+        print(RED + "\nVocê perdeu!" + RESET)
+    elif (result == "exit"):
+        print(GREY + "\nSaindo..." + RESET)
 
 
 def find_player(maps):
@@ -48,22 +25,6 @@ def find_player(maps):
             if (i == 'P'):
                 return (x, y)
     return None
-
-
-def update_map(screen, c, x, y):
-    if (c == '0'):
-        screen.blit(WAY, (x * IMAGE, y * IMAGE))
-    elif (c == '1'):
-        screen.blit(WALL, (x * IMAGE, y * IMAGE))
-    elif (c == 'C'):
-        screen.blit(COIN, (x * IMAGE, y * IMAGE))
-    elif (c == 'E'):
-        screen.blit(EXIT, (x * IMAGE, y * IMAGE))
-    elif (c == 'P'):
-        screen.blit(PLAYER, (x * IMAGE, y * IMAGE))
-    elif (c == 'G'):
-        screen.blit(ENEMY, (x * IMAGE, y * IMAGE))
-    pygame.display.update(pygame.Rect(x * IMAGE, y * IMAGE, IMAGE, IMAGE))
 
 
 def enemy_around(maps, x, y):
@@ -99,36 +60,7 @@ def get_around(maps, x, y):
     return around
 
 
-def move_enemies(maps, screen):
-    for y, line in enumerate(maps):
-        for x, i in enumerate(line):
-            if (i == 'G'):
-                newx, newy = x, y
-                direction = random.choice([0, 1, 2, 3])
-                tempx, tempy = newx, newy
-                if (direction == 0):
-                    tempy -= 1
-                elif (direction == 1):
-                    tempy += 1
-                elif (direction == 2):
-                    tempx -= 1
-                elif (direction == 3):
-                    tempx += 1
-
-                if (0 <= tempy < len(maps) and 0 <= tempx < len(maps[0])):
-                    if (maps[tempy][tempx] == '0'):
-                        newx, newy = tempx, tempy
-                    elif (maps[tempy][tempx] == 'P'):
-                        return None
-
-                maps[y][x] = '0'
-                update_map(screen, '0', x, y)
-                maps[newy][newx] = 'G'
-                update_map(screen, 'G', newx, newy)
-    return maps
-
-
-def map_loop(screen, maps):
+def gameplay(screen, maps):
     player = find_player(maps)
     coins = count_char(maps, 'C')
 
@@ -153,6 +85,8 @@ def map_loop(screen, maps):
                     enemies_around = get_around(maps, *player)
                     if (enemies_around):
                         for enemy in enemies_around:
+                            update_map(screen, 'D', *enemy)
+                            pygame.time.delay(100)
                             update_map(screen, '0', *enemy)
                             maps[enemy[1]][enemy[0]] = '0'
                         continue
@@ -168,9 +102,6 @@ def map_loop(screen, maps):
                     return "lose"
 
                 if (maps[newy][newx] != '1'):
-                    maps = move_enemies(maps, screen)
-                    if (maps is None):
-                        return "lose"
                     if (maps[newy][newx] == 'C'):
                         maps[newy][newx] = '0'
                         coins -= 1

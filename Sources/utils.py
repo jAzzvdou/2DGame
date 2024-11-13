@@ -1,8 +1,10 @@
 import sys
+from macros import YELLOW, RESET
 
 
 def err(s):
-    print(s, file=sys.stderr)
+    message = YELLOW + s + RESET
+    print(message, file=sys.stderr)
 
 
 def count_char(maps, c):
