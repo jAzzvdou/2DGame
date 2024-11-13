@@ -3,6 +3,9 @@ from macros import ERR_MAP
 
 
 def verify_chars(maps):
+    '''
+        Função para verificar se os caracteres do mapa são válidos.
+    '''
     for line in maps:
         for i in line:
             if (i not in ['0', '1', 'C', 'E', 'P', 'G']):
@@ -13,6 +16,9 @@ def verify_chars(maps):
 
 
 def isnt_rectangular(maps):
+    '''
+        Função para verificar se o mapa é retangular.
+    '''
     linelen = len(maps[0])
     for line in maps:
         if (len(line) != linelen):
@@ -21,6 +27,9 @@ def isnt_rectangular(maps):
 
 
 def quantity_chars(maps):
+    '''
+        Função para verificar se a quantidade de caracteres do mapa é válida.
+    '''
     player = count_char(maps, 'P') != 1
     exitt = count_char(maps, 'E') != 1
     coin = count_char(maps, 'C') < 1
@@ -31,6 +40,9 @@ def quantity_chars(maps):
 
 
 def verify_corners(maps):
+    '''
+        Função para verificar se as bordas do mapa são paredes.
+    '''
     if ((not all(i == '1' for i in maps[0])) or (not all(i == '1' for i in maps[-1]))):
         err(ERR_MAP)
         err("As bordas do mapa devem ser paredes.")
@@ -45,6 +57,9 @@ def verify_corners(maps):
 
 
 def invincible_map(maps):
+    '''
+        Função para verificar se o mapa é invencível.
+    '''
     player_pos = None
     coin_pos = set()
     exit_pos = None
@@ -79,6 +94,9 @@ def invincible_map(maps):
 
 
 def invalid_map(maps):
+    '''
+        Função para verificar se o mapa é inválido.
+    '''
     if (verify_chars(maps)):
         return True
 

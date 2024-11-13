@@ -4,6 +4,9 @@ from macros import ERR_FILENAME, ERR_NOTFOUND, IMAGE, WALL, WAY, COIN, EXIT, PLA
 
 
 def get_map():
+    '''
+        Função para pegar o mapa do arquivo
+    '''
     filename = str(input("Digite o nome do arquivo do mapa (ex: file.map): "))
     if (not filename.endswith('.map')):
         err(ERR_FILENAME.format(filename=filename))
@@ -21,6 +24,9 @@ def get_map():
 
 
 def create_map(maps):
+    '''
+        Função para criar o mapa na tela.
+    '''
     pygame.init()
     width = len(maps[0]) * IMAGE
     height = len(maps) * IMAGE
@@ -47,6 +53,10 @@ def create_map(maps):
 
 
 def update_map(screen, c, x, y):
+    '''
+        Função para atualizar o mapa na tela.
+        Entra a tela, o caractere que você quer atualizar para tal, a posição x e y.
+    '''
     if (c == '0'):
         screen.blit(WAY, (x * IMAGE, y * IMAGE))
     elif (c == '1'):

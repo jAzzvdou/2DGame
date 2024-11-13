@@ -6,6 +6,9 @@ from macros import GREEN, RED, GREY, RESET
 
 
 def init_game():
+    '''
+        Função que inicializa o mapa e o jogo.
+    '''
     maps = get_map()
     if (maps is None or invalid_map(maps)):
         return
@@ -20,6 +23,9 @@ def init_game():
 
 
 def find_player(maps):
+    '''
+        Função para encontrar a posição do jogador no mapa.
+    '''
     for y, line in enumerate(maps):
         for x, i in enumerate(line):
             if (i == 'P'):
@@ -28,6 +34,9 @@ def find_player(maps):
 
 
 def enemy_around(maps, x, y):
+    '''
+        Função para verificar se tem inimigos ao redor do jogador.
+    '''
     if (maps[y - 1][x] == 'G' or maps[y + 1][x] == 'G'):
         return True
     elif (maps[y][x - 1] == 'G' or maps[y][x + 1] == 'G'):
@@ -40,6 +49,9 @@ def enemy_around(maps, x, y):
 
 
 def get_around(maps, x, y):
+    '''
+        Função para pegar as posições dos inimigos ao redor do jogador.
+    '''
     around = []
     if (maps[y - 1][x] == 'G'):
         around.append((x, y - 1))
@@ -61,6 +73,9 @@ def get_around(maps, x, y):
 
 
 def gameplay(screen, maps):
+    '''
+        Função para o gameplay do jogo, movimentação e ataque do jogador.
+    '''
     player = find_player(maps)
     coins = count_char(maps, 'C')
 
