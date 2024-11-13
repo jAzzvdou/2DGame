@@ -87,41 +87,41 @@ def gameplay(screen, maps):
             print("Dentro do For Event...")
             if (event.type == pygame.QUIT):
                 running = False
-            print("1")
             elif (event.type == pygame.KEYDOWN):
+                print("1")
                 newx, newy = player
-                print("2")
                 if (event.key == pygame.K_ESCAPE):
+                    print("2")
                     return "exit"
-                print("3")
                 elif (event.key == pygame.K_UP):
+                    print("3")
                     newy -= 1
-                print("4")
                 elif (event.key == pygame.K_DOWN):
+                    print("4")
                     newy += 1
-                print("5")
                 elif (event.key == pygame.K_LEFT):
+                    print("5")
                     newx -= 1
-                print("6")
                 elif (event.key == pygame.K_RIGHT):
+                    print("6")
                     newx += 1
-                print("7")
                 elif (event.key == pygame.K_SPACE and enemy_around(maps, *player)):
-                    print("8")
+                    print("7")
                     enemies_around = get_around(maps, *player)
                     if (enemies_around):
-                        print("9")
+                        print("8")
                         for enemy in enemies_around:
-                            print("10")
+                            print("9")
                             update_map(screen, 'D', *enemy)
                             pygame.time.delay(100)
                             update_map(screen, '0', *enemy)
                             maps[enemy[1]][enemy[0]] = '0'
                         continue
 
-                print("11")
+                print("10")
                 if (maps[newy][newx] == 'E'):
                     if (coins < 1):
+                        print("11")
                         running = False
                         return "win"
                     else:
