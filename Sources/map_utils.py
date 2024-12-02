@@ -32,7 +32,7 @@ def create_map(maps):
     height = len(maps) * IMAGE
 
     screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption("| Ruined Castle |")
+    pygame.display.set_caption("| O Castelo Arruinado |")
 
     for y, line in enumerate(maps):
         for x, i in enumerate(line):
